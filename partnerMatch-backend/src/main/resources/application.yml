@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: PartnerMatch Backend
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3316/usercenter?serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  # session 失效时间(分钟）
+  session:
+    timeout: 86400 # 两个月
+    store-type: redis # 从redis读写session，默认none表示存储在服务器
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      database: 0  # 要用redis的哪个db
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.example.match.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 实体类列表
+
+
+server:
+  port: 8082
+  servlet: 
+    context-path: /api
+    session:
+      cookie:
+        domain: localhost
+mybatis-plus:
+  # mapper-locations: classpath*:com/example/match/mapper/*.xml
+  configuration:
+      map-underscore-to-camel-case: false
+  global-config:
+    db-config:
+      logic-delete-field: isDelete
+      logic-delete-value: 1 # 逻辑已删除
+      logic-not-delete-value: 0
